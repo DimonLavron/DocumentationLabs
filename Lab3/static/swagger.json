@@ -1,0 +1,263 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "description": "Lab3: Web app for mvc pattern",
+      "version": "1.0.0",
+      "title": "Lab3",
+      "contact": {
+        "email": "dima.lavrishin@gmail.com"
+      },
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "servers": [
+        {
+          "url": "/"
+        }
+    ],
+    "tags": [
+        {
+          "name": "Ride Request",
+          "description": "Example API for requesting and return ride requests"
+        }
+    ],
+    "paths": {
+        "/request": {
+          "get": {
+            "tags": [
+              "Ride Request"
+            ],
+            "summary": "Returns rideRequests",
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/components/schemas/rideRequests"
+                }
+              }
+            }
+          },
+          "post": {
+            "tags": [
+              "Ride Request"
+            ],
+            "summary": "Create a new ride request system",
+            "requestBody": {
+              "description": "Ride Request Post Object",
+              "required": true,
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/rideRequestPostBody"
+                  }
+                }
+              }
+            },
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "201": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/components/schemas/id"
+                }
+              },
+              "400": {
+                "description": "Failed. Bad post data."
+              }
+            }
+          }
+        },
+        "/request/{id}": {
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID of the ride that we want to match",
+              "type": "string"
+            }
+          ],
+          "get": {
+            "tags": [
+              "Ride Request"
+            ],
+            "summary": "Get ride request with given ID",
+            "parameters": [
+              {
+                "in": "path",
+                "name": "id",
+                "required": true,
+                "description": "Ride Request id",
+                "schema": {
+                  "$ref": "#/components/schemas/id"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/components/schemas/rideRequest"
+                }
+              },
+              "400": {
+                "description": "Failed. Misunderstood Request."
+              },
+              "404": {
+                "description": "Failed. Book request not found."
+              }
+            }
+          },
+          "put": {
+            "summary": "Edit a ride request by ID",
+            "tags": [
+              "Ride Request"
+            ],
+            "parameters": [
+              {
+                "in": "path",
+                "name": "id",
+                "required": true,
+                "description": "Ride Request id",
+                "schema": {
+                  "$ref": "#/components/schemas/id"
+                }
+              }
+            ],
+            "requestBody": {
+              "description": "Ride Request Object",
+              "required": true,
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/rideRequest"
+                  }
+                }
+              }
+            },
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/components/schemas/rideRequest"
+                }
+              },
+              "400": {
+                "description": "Failed. Bad post data."
+              }
+            }
+          },
+          "delete": {
+            "summary": "Delete Ride Request by ID",
+            "tags": [
+              "Ride Request"
+            ],
+            "parameters": [
+              {
+                "in": "path",
+                "name": "id",
+                "required": true,
+                "description": "Ride Request Id",
+                "schema": {
+                  "$ref": "#/components/schemas/id"
+                }
+              }
+            ],
+            "responses": {
+              "204": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/components/schemas/id"
+                }
+              },
+              "400": {
+                "description": "Failed. Misunderstood Request."
+              },
+              "404": {
+                "description": "Failed. Book Request not found."
+              }
+            }
+          }
+        }
+      },
+    "components": {
+        "schemas": {
+          "id": {
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          },
+          "rideRequestPostBody": {
+            "type": "object",
+            "properties": {
+              "departure_address": {
+                "type": "string",
+                "format": "string"
+              },
+              "destination_address": {
+                "type": "string",
+                "format": "string"
+              },
+              "price": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "customer": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "driver": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          },
+          "rideRequest": {
+            "type": "object",
+            "properties": {
+              "departure_address": {
+                "type": "string",
+                "format": "string"
+              },
+              "destination_address": {
+                "type": "string",
+                "format": "string"
+              },
+              "price": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "customer": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "driver": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          },
+          "rideRequests": {
+            "type": "object",
+            "properties": {
+              "rideRequest": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/rideRequest"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
